@@ -422,38 +422,42 @@
 </style>
 
 <script>
-    // Typewriter Effect for Username
-    var i = 0;
-    var username = "tour"; // Text to type
-    var speed = 250; // Typing speed
-    var isDeleting = false; // Track if we are deleting
+        // Typewriter Effect for Username
+        var i = 0;
+        var username = "tour"; // Text to type
+        var speed = 250; // Typing speed
+        var isDeleting = false; // Track if we are deleting
+        var displayText = document.getElementById("typed-text"); // The container for typed text
 
-    function typeWriter() {
-        var displayText = document.getElementById("typed-text");
+        // Add the cursor element
+        var cursor = document.createElement('span');
+        cursor.classList.add('cursor');
+        displayText.appendChild(cursor);
 
-        if (!isDeleting && i < username.length) {
-            // Typing phase
-            displayText.innerHTML = username.substring(0, i + 1);
-            i++;
-            setTimeout(typeWriter, speed);
-        } else if (isDeleting && i > 0) {
-            // Deleting phase
-            displayText.innerHTML = username.substring(0, i - 1);
-            i--;
-            setTimeout(typeWriter, speed);
-        } else if (!isDeleting && i === username.length) {
-            // Start deleting after fully typed
-            isDeleting = true;
-            setTimeout(typeWriter, speed);
-        } else if (isDeleting && i === 0) {
-            // Restart typing after fully deleted
-            isDeleting = false;
-            setTimeout(typeWriter, speed);
+        function typeWriter() {
+            if (!isDeleting && i < username.length) {
+                // Typing phase
+                displayText.innerHTML = username.substring(0, i + 1); // Update text with the typed part
+                i++;
+                setTimeout(typeWriter, speed); // Continue typing
+            } else if (isDeleting && i > 0) {
+                // Deleting phase
+                displayText.innerHTML = username.substring(0, i - 1); // Update text with the deleted part
+                i--;
+                setTimeout(typeWriter, speed); // Continue deleting
+            } else if (!isDeleting && i === username.length) {
+                // Start deleting after fully typed
+                isDeleting = true;
+                setTimeout(typeWriter, speed); // Wait a moment before deleting
+            } else if (isDeleting && i === 0) {
+                // Restart typing after fully deleted
+                isDeleting = false;
+                setTimeout(typeWriter, speed); // Wait a moment before typing again
+            }
         }
-    }
 
-    // Start typing effect
-    typeWriter();
-</script>
+        // Start typing effect
+        typeWriter();
+    </script>
 </body>
 </html>

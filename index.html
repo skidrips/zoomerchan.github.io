@@ -22,59 +22,180 @@
             cursor: url(https://r2.guns.lol/399b72f4-04eb-4b67-be9c-f9f363fdf9f5.png) 16 16, auto !important;
         }
 
-        /* Various color and layout customizations */
         body {
-            background-color: #000000;
+            background-color: #000;
+            color: #fff;
+            font-family: Satoshi, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Full screen background video */
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Audio styling (background) */
+        audio {
+            display: none;
+        }
+
+        /* Centered content container */
+        .centered-container {
+            text-align: center;
+            z-index: 10;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Profile container styling */
+        .profile-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 10px; /* Reduced the margin */
+        }
+
+        .profile-decoration {
+            width: 200px;
+            height: auto;
+            position: absolute;
+            top: -20px; /* Adjusted the top position to move it lower */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .profile-picture {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            border: 4px solid #ffffff;
+        }
+
+        .username-typewriter {
+            font-size: 36px;
             color: #ffffff;
+            margin-top: 5px; /* Reduced the margin */
+            font-weight: bold;
+        }
+
+        .cursor {
+            animation: blink 1s infinite step-end;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Social links container */
+        .social-links {
+            margin-top: 10px; /* Reduced the margin */
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .social-links img {
+            width: 40px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .social-links img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Discord join section */
+        .discord-join {
+            margin-top: 20px; /* Reduced the margin */
+        }
+
+        .discord-icon img {
+            width: 50px;
+            height: auto;
+        }
+
+        .discord-join h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .discord-join p {
+            margin: 5px 0;
+        }
+
+        .discord-join a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            background-color: #7289da;
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .discord-join a:hover {
+            background-color: #5d74d3;
         }
     </style>
 </head>
 <body>
-    <!-- Video Background -->
+    <!-- Background video and audio -->
     <video src="https://r2.guns.lol/1d4ab8c9-c691-447b-b151-6bd21082afc2.mp4" playsinline loop autoplay muted class="background-video"></video>
-
-    <!-- Audio Background -->
     <audio src="https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3" loop autoplay></audio>
 
-    <!-- Profile and Typewriter Effect -->
-    <div class="profile-container">
-        <img src="https://cdn.discordapp.com/avatar-decoration-presets/a_c3cffc19e9784f7d0b005eecdf1b566e.png" alt="Profile Decoration" class="profile-decoration">
-        <img src="https://r2.guns.lol/2e36f1f2-a2a9-495f-8d63-3c3c94ce1d3f.jpg" alt="Profile Picture" class="profile-picture">
-        <h3 class="username-typewriter">/ p o m i <span class="cursor">|</span></h3>
-    </div>
-
-    <!-- Social Links Section -->
-    <div class="social-links">
-        <a href="https://instagram.com/wt0ur" target="_blank">
-            <img src="https://r2.guns.lol/43dac745-1942-42f1-8f13-b6c429017678.gif" alt="Instagram">
-        </a>
-        <a href="https://discord.gg/plus" target="_blank">
-            <img src="https://r2.guns.lol/266bebad-ab93-4fe2-a0df-0ca2d9025bcb.gif" alt="Discord">
-        </a>
-        <a href="https://x.com/wt0ur" target="_blank">
-            <img src="https://r2.guns.lol/289a6455-3685-4605-b5b5-f113974f0438.gif" alt="X (Twitter)">
-        </a>
-    </div>
-
-    <!-- Discord Join Section -->
-    <div class="discord-join">
-        <div class="discord-icon">
-            <img src="https://cdn.discordapp.com/icons/1238290923763400875/a_ad9b6846b041127d1a06ff530edceb01.png" alt="Discord Icon">
+    <!-- Centered content container -->
+    <div class="centered-container">
+        <!-- Profile and username -->
+        <div class="profile-container">
+            <img src="https://cdn.discordapp.com/avatar-decoration-presets/a_c3cffc19e9784f7d0b005eecdf1b566e.png" alt="Profile Decoration" class="profile-decoration">
+            <img src="https://r2.guns.lol/2e36f1f2-a2a9-495f-8d63-3c3c94ce1d3f.jpg" alt="Profile Picture" class="profile-picture">
+            <h3 class="username-typewriter">tour<span class="cursor">|</span></h3>
         </div>
-        <h1>/ p l u s</h1>
-        <p>63 Online | 375 Members</p>
-        <a href="https://discord.gg/plus" target="_blank">Join</a>
-    </div>
 
-    <!-- CAPTCHA Verification -->
-    <div class="cf-turnstile" data-sitekey="0x4AAAAAAAgU7T2niLQD-TLm" data-callback="getToken"></div>
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://instagram.com/wt0ur" target="_blank">
+                <img src="https://r2.guns.lol/43dac745-1942-42f1-8f13-b6c429017678.gif" alt="Instagram">
+            </a>
+            <a href="https://discord.gg/plus" target="_blank">
+                <img src="https://r2.guns.lol/266bebad-ab93-4fe2-a0df-0ca2d9025bcb.gif" alt="Discord">
+            </a>
+            <a href="https://x.com/wt0ur" target="_blank">
+                <img src="https://r2.guns.lol/289a6455-3685-4605-b5b5-f113974f0438.gif" alt="X (Twitter)">
+            </a>
+        </div>
 
-    <!-- External Scripts -->
+        <!-- Discord Join Section -->
+        <div class="discord-join">
+            <div class="discord-icon">
+                <img src="https://cdn.discordapp.com/icons/1238290923763400875/a_ad9b6846b041127d1a06ff530edceb01.png" alt="Discord Icon">
+            </div>
+            <h1>/plus</h1>
+            <a href="https://discord.gg/plus" target="_blank">Join</a>
+        </div>
     <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js" id="_cursor"></script>
     <script src="https://assets.guns.lol/oneko.js" id="_ccat"></script>
     <script src="https://assets.guns.lol/_pow.js" id="_codescript"></script>
     <script>
-        // CAPTCHA POW Verification
         const p = new _injPow("b429f829a116cbc22965d608a21db381bf6e7526cd2721bb2dfb6b70895", "5", "98d6ad156b20547c2092a7d8d1c73d42b975b0845dd1d3d3653a32c0b44d6ec6", false);
         p.solvepow().then(async (o) => {
             if (o != null) {

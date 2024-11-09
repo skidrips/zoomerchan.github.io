@@ -90,7 +90,6 @@
         .username-typewriter {
             font-size: 36px;
             color: #ffffff;
-            font-weight: bold;
             display: inline-block;
             white-space: nowrap;
             overflow: hidden;
@@ -170,7 +169,6 @@
 
         .discord-join h1 {
             font-size: 32px;
-            font-weight: bold;
             margin: 10px 0;
         }
 
@@ -263,37 +261,37 @@
     <video src="https://r2.guns.lol/1d4ab8c9-c691-447b-b151-6bd21082afc2.mp4" playsinline loop autoplay muted class="background-video"></video>
 
     <script>
-        // Define the two audio sources
-        const audioSources = [
-            "https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
-            "https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3"
-        ];
+    // Define the two audio sources
+    const audioSources = [
+        "https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
+        "https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3"
+    ];
 
-        // Randomly select one of the audio sources
-        const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
+    // Randomly select one of the audio sources
+    const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
 
-        // Create the audio element with the selected source
-        const audio = new Audio(selectedAudioSource);
-        audio.loop = true; // Set audio to loop
+    // Create the audio element with the selected source
+    const audio = new Audio(selectedAudioSource);
+    audio.loop = true; // Set audio to loop
 
-        // Function to reveal the site, fade content, and play audio
-        document.getElementById('cover').addEventListener('click', () => {
-            // Hide the cover with a fade-out effect
-            document.getElementById('cover').classList.add('hidden');
+    // Function to reveal the site, fade content, and play audio
+    document.getElementById('cover').addEventListener('click', () => {
+        // Hide the cover with a fade-out effect
+        document.getElementById('cover').classList.add('hidden');
 
-            // Show the content with a fade-in effect
-            document.getElementById('website-content').classList.add('visible');
+        // Show the content with a fade-in effect
+        document.getElementById('website-content').classList.add('visible');
 
-            // Play audio after the cover is clicked
-            audio.play().catch(error => {
-                console.log("Autoplay blocked. Click to enable audio.");
-                // If autoplay is blocked, play the audio upon another click
-                document.addEventListener('click', () => {
-                    audio.play();
-                }, { once: true });
-            });
+        // Attempt to play the audio
+        audio.play().catch(error => {
+            console.log("Autoplay blocked. Audio will play after another click.");
+            // If autoplay is blocked, play the audio upon another click anywhere
+            document.addEventListener('click', () => {
+                audio.play();
+            }, { once: true });
         });
-    </script>
+    });
+</script>
 </body>
 
     <!-- Centered content container -->

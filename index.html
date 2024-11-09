@@ -195,10 +195,6 @@
             background-color: #5d74d3;
         }
 
-        /* CAPTCHA Styling */
-        .cf-turnstile {
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -289,8 +285,8 @@
         let i = 0; // Starting index for typing
         let currentTitle = ""; // The current title text
         let deleting = false; // Flag to indicate if we're deleting the text
-        const typingSpeed = 150; // Typing speed in milliseconds
-        const deletingSpeed = 100; // Deleting speed in milliseconds
+        const typingSpeed = 100; // Typing speed in milliseconds
+        const deletingSpeed = 80; // Deleting speed in milliseconds
 
         function typeWriter() {
             if (!deleting) {

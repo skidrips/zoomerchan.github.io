@@ -25,7 +25,7 @@
         body {
             background-color: #000;
             color: #fff;
-            font-family: Montserrat, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -90,6 +90,7 @@
         .username-typewriter {
             font-size: 36px;
             color: #ffffff;
+            font-weight: bold;
             display: inline-block;
             white-space: nowrap;
             overflow: hidden;
@@ -169,6 +170,7 @@
 
         .discord-join h1 {
             font-size: 32px;
+            font-weight: bold;
             margin: 10px 0;
         }
 
@@ -192,13 +194,17 @@
             background-color: #5d74d3;
         }
 
+        /* CAPTCHA Styling */
+        .cf-turnstile {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-<head>
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website with Blurred Entrance Cover</title>
+    <title>Website with Entrance Cover</title>
     <!-- Link to Montserrat font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -209,7 +215,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark overlay */
+            background-color: #000; /* Dark background for the cover */
             color: #fff; /* White text color */
             display: flex;
             align-items: center;
@@ -219,7 +225,6 @@
             z-index: 9999; /* Ensure the cover is on top */
             cursor: pointer;
             transition: opacity 0.5s;
-            backdrop-filter: blur(10px); /* Adds blur effect to background */
         }
 
         /* Fade out effect */
@@ -239,17 +244,6 @@
             object-fit: cover;
             z-index: -1; /* Behind other content */
         }
-
-        /* Content styling */
-        .content {
-            opacity: 0; /* Initially hidden */
-            transition: opacity 1s ease-in-out; /* Smooth fade-in transition */
-        }
-
-        /* Content visible after cover is clicked */
-        .content.visible {
-            opacity: 1; /* Makes content visible */
-        }
     </style>
 </head>
 <body>
@@ -259,40 +253,35 @@
     <!-- Background video -->
     <video src="https://r2.guns.lol/1d4ab8c9-c691-447b-b151-6bd21082afc2.mp4" playsinline loop autoplay muted class="background-video"></video>
 
-	<script>
-    	// Define two audio sources
-    	const audioSources = [
-        	"https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
-        	"https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3"
-    	];
+    <script>
+        // Define the two audio sources
+        const audioSources = [
+            "https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
+            "https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3" // Replace with your second audio URL
+        ];
 
-    	// Randomly select one of the audio sources
-    	const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
+        // Randomly select one of the audio sources
+        const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
 
-    	// Create the audio element with the selected source
-    	const audio = new Audio(selectedAudioSource);
-    	audio.loop = true; // Set audio to loop
+        // Create the audio element with the selected source
+        const audio = new Audio(selectedAudioSource);
+        audio.loop = true; // Set audio to loop
 
-    	// Function to handle the cover click and reveal content + play audio
-    	document.getElementById('cover').addEventListener('click', () => {
-        	// Hide the cover with a fade-out effect
-        	document.getElementById('cover').classList.add('hidden');
+        // Function to reveal the site and play audio
+        document.getElementById('cover').addEventListener('click', () => {
+            // Hide the cover with a fade-out effect
+            document.getElementById('cover').classList.add('hidden');
 
-        	// Show the content with a fade-in effect
-        	document.getElementById('website-content').classList.add('visible');
-
-        	// Play the audio after the cover is clicked
-        	audio.play().catch(error => {
-            	console.log("Autoplay blocked. Waiting for user click to play audio.");
-
-            	// If autoplay is blocked, wait for another user click to play audio
-            	document.addEventListener('click', () => {
-                	audio.play();
-            	}, { once: true });
-        	});
-    	});
-</script>
-</body>
+            // Attempt to play audio
+            audio.play().catch(error => {
+                // If autoplay is blocked, require a second click to start audio
+                console.log("Autoplay blocked. Click to enable audio.");
+                document.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true });
+            });
+        });
+    </script>
 
     <!-- Centered content container -->
     <div class="centered-container">
@@ -324,9 +313,9 @@
         </div>
 
         <!-- Discord Join Section -->
-			<div class="center-container">
-    			<div class="discord-join">
-        			<div class="discord-icon">
+	<div class="center-container">
+    		<div class="discord-join">
+        		<div class="discord-icon">
             			<style>
                 			#rcorners1 {
                     			border-radius: 25px;
@@ -339,99 +328,95 @@
                 			}
 
                 			/* Center the container with minimal gap */
-                            .center-container {
-                    			display: flex;
-                    			justify-content: center;
-                    			align-items: center;
-                    			min-height: 25vh; /* Adjust height as needed */
-                    			text-align: center;
+                			.center-container {
+                    				display: flex;
+                    				justify-content: center;
+                    				align-items: center;
+                    				min-height: 25vh; /* Adjust height as needed */
+                    				text-align: center;
                 			}
 
                 			/* Center and reduce gap */
                 			.discord-join {
-                    			display: flex;
-                    			flex-direction: column;
-                    			align-items: center;
-                    			gap: 5px; /* Adjust gap as needed */
+                    				display: flex;
+                    				flex-direction: column;
+                    				align-items: center;
+                    				gap: 5px; /* Adjust gap as needed */
                 			}
             			</style>
 
             			<p id="rcorners1"></p>
-        			</div>
-        			<h1>/ p l u s</h1>
-        			<a href="https://discord.gg/plus" target="_blank">join</a>
-    			</div>
-			</div>
-
+        		</div>
+        		<h1>/ p l u s</h1>
+        		<a href="https://discord.gg/plus" target="_blank">join</a>
+    		</div>
+</div>
 
     <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js" id="_cursor"></script>
     <script src="https://assets.guns.lol/oneko.js" id="_ccat"></script>
     <script src="https://assets.guns.lol/_pow.js" id="_codescript"></script>
-        <!-- HTML element to display the typewriter effect -->
-		<div id="typed-text-container">
-    		<span id="typed-text"></span>
-		</div>
+    <!-- HTML element to display the typewriter effect -->
+<div id="typed-text-container">
+    <span id="typed-text"></span>
+</div>
 
-		<style>
-    		/* Container to hold the typewriter effect with cursor */
-    		#typed-text-container {
-        		display: inline-block;
-    		}
+<style>
+    /* Container to hold the typewriter effect with cursor */
+    #typed-text-container {
+        display: inline-block;
+    }
 
-    		/* Style for the blinking cursor */
-    		#typed-text::after {
-        		content: "|";
-        		animation: blink 0.7s steps(1) infinite;
-        		color: inherit; /* Ensures the cursor matches the text color */
-    		}
+    /* Style for the blinking cursor */
+    #typed-text::after {
+        content: "|";
+        animation: blink 0.7s steps(1) infinite;
+        color: inherit; /* Ensures the cursor matches the text color */
+    }
 
-    		/* Blinking animation */
-    		@keyframes blink {
-        		0%, 50% {
-            		opacity: 1;
-        		}
-        		50.1%, 100% {
-            		opacity: 0;
-        		}
-    		}
-		</style>
+    /* Blinking animation */
+    @keyframes blink {
+        0%, 50% {
+            opacity: 1;
+        }
+        50.1%, 100% {
+            opacity: 0;
+        }
+    }
+</style>
 
+<script>
+    // Typewriter Effect for Username
+    var i = 0;
+    var username = " tour "; // Text to type
+    var speed = 250; // Typing speed
+    var isDeleting = false; // Track if we are deleting
 
+    function typeWriter() {
+        var displayText = document.getElementById("typed-text");
 
-		<script>
-    		// Typewriter Effect for Username
-    		var i = 0;
-    		var username = " tour"; // Text to type
-    		var speed = 250; // Typing speed
-    		var isDeleting = false; // Track if we are deleting
+        if (!isDeleting && i < username.length) {
+            // Typing phase
+            displayText.innerHTML = username.substring(0, i + 1);
+            i++;
+            setTimeout(typeWriter, speed);
+        } else if (isDeleting && i > 0) {
+            // Deleting phase
+            displayText.innerHTML = username.substring(0, i - 1);
+            i--;
+            setTimeout(typeWriter, speed);
+        } else if (!isDeleting && i === username.length) {
+            // Start deleting after fully typed
+            isDeleting = true;
+            setTimeout(typeWriter, speed);
+        } else if (isDeleting && i === 0) {
+            // Restart typing after fully deleted
+            isDeleting = false;
+            setTimeout(typeWriter, speed);
+        }
+    }
 
-    		function typeWriter() {
-        		var displayText = document.getElementById("typed-text");
-
-        		if (!isDeleting && i < username.length) {
-            		// Typing phase
-            		displayText.innerHTML += username.charAt(i);
-            		i++;
-            		setTimeout(typeWriter, speed);
-        		} else if (isDeleting && i > 0) {
-            		// Deleting phase
-            		displayText.innerHTML = username.substring(0, i - 1);
-            		i--;
-            		setTimeout(typeWriter, speed);
-        		} else if (!isDeleting && i === username.length) {
-            		// Start deleting after fully typed
-            		isDeleting = true;
-            		setTimeout(typeWriter, speed);
-        		} else if (isDeleting && i === 0) {
-            		// Restart typing after fully deleted
-            		isDeleting = false;
-            		setTimeout(typeWriter, speed);
-        		}
-    		}
-
-    		// Start typing effect
-    		typeWriter();
-		</script>
-
+    // Start typing effect
+    typeWriter();
+</script>
 </body>
 </html>

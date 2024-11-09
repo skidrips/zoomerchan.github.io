@@ -194,41 +194,107 @@
             background-color: #5d74d3;
         }
 
-        /* CAPTCHA Styling */
-        .cf-turnstile {
-            margin-top: 20px;
+    </style>
+</head>
+<body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website with Blurred Entrance Cover</title>
+    <!-- Link to Montserrat font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Style for the full-screen overlay */
+        .cover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark overlay */
+            color: #fff; /* White text color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            font-weight: bold;
+            z-index: 9999; /* Ensure the cover is on top */
+            cursor: pointer;
+            transition: opacity 0.5s;
+            backdrop-filter: blur(10px); /* Adds blur effect to background */
+        }
+
+        /* Fade out effect */
+        .cover.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Background video styling */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1; /* Behind other content */
+        }
+
+        /* Content styling */
+        .content {
+            opacity: 0; /* Initially hidden */
+            transition: opacity 1s ease-in-out; /* Smooth fade-in transition */
+        }
+
+        /* Content visible after cover is clicked */
+        .content.visible {
+            opacity: 1; /* Makes content visible */
         }
     </style>
 </head>
 <body>
-    <!-- Background video and audio -->
-	<video src="https://r2.guns.lol/1d4ab8c9-c691-447b-b151-6bd21082afc2.mp4" playsinline loop autoplay muted class="background-video"></video>
+    <!-- Full-screen cover with entrance text -->
+    <div class="cover" id="cover">entrance</div>
 
-	<script>
-    // Define the two audio sources
-    const audioSources = [
-        "https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
-        "https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3"
-    ];
+    <!-- Background video -->
+    <video src="https://r2.guns.lol/1d4ab8c9-c691-447b-b151-6bd21082afc2.mp4" playsinline loop autoplay muted class="background-video"></video>
 
-    // Randomly select one of the audio sources
-    const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
+    <script>
+        // Define the two audio sources
+        const audioSources = [
+            "https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
+            "https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3"
+        ];
 
-    // Create the audio element with the selected source
-    const audio = new Audio(selectedAudioSource);
-    audio.loop = true; // Set audio to loop
+        // Randomly select one of the audio sources
+        const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
 
-    // Attempt to play the audio when the page loads
-    window.addEventListener('load', () => {
-        audio.play().catch(error => {
-            // If autoplay is blocked, add a click listener to start the audio
-            console.log("Autoplay blocked. Click to enable audio.");
-            document.addEventListener('click', () => {
-                audio.play();
-            }, { once: true });
+        // Create the audio element with the selected source
+        const audio = new Audio(selectedAudioSource);
+        audio.loop = true; // Set audio to loop
+
+        // Function to reveal the site, fade content, and play audio
+        document.getElementById('cover').addEventListener('click', () => {
+            // Hide the cover with a fade-out effect
+            document.getElementById('cover').classList.add('hidden');
+
+            // Show the content with a fade-in effect
+            document.getElementById('website-content').classList.add('visible');
+
+            // Play audio after the cover is clicked
+            audio.play().catch(error => {
+                console.log("Autoplay blocked. Click to enable audio.");
+                // If autoplay is blocked, play the audio upon another click
+                document.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true });
+            });
         });
-    });
-</script>
+    </script>
+</body>
 
     <!-- Centered content container -->
     <div class="centered-container">

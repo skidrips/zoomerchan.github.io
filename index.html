@@ -47,41 +47,17 @@
             z-index: -1;
         }
 
-        /* Full-screen cover */
-        .cover {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark overlay */
-            color: #fff; /* White text color */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2em;
-            font-weight: bold;
-            z-index: 9999; /* Ensure the cover is on top */
-            cursor: pointer;
-            transition: opacity 0.5s;
-            backdrop-filter: blur(10px); /* Adds blur effect to background */
+        /* Audio styling (background) */
+        audio {
+            display: none;
         }
 
-        .cover.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        /* Content fade-in */
-        .content {
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .content.visible {
-            opacity: 1;
+        /* Centered content container */
+        .centered-container {
+            text-align: center;
+            z-index: 10;
+            max-width: 100%;
+            max-height: 100%;
         }
 
         /* Profile container styling */
@@ -108,7 +84,7 @@
         }
 
         .username-container {
-            margin-top: 10px;
+            margin-top: 10px; /* Adjusted margin */
         }
 
         .username-typewriter {
@@ -136,7 +112,33 @@
             }
         }
 
-        /* Social links */
+        /* Typewriter animation */
+        .username-typewriter .typing {
+            display: inline-block;
+            width: 0;
+            overflow: hidden;
+            animation: typing 4s steps(6) forwards, reverseTyping 4s steps(6) 4s forwards;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes reverseTyping {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0;
+            }
+        }
+
+        /* Social links container */
         .social-links {
             margin-top: 10px;
         }
@@ -191,6 +193,66 @@
         .discord-join a:hover {
             background-color: #5d74d3;
         }
+
+    </style>
+</head>
+<body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website with Blurred Entrance Cover</title>
+    <!-- Link to Montserrat font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Style for the full-screen overlay */
+        .cover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark overlay */
+            color: #fff; /* White text color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            font-weight: bold;
+            z-index: 9999; /* Ensure the cover is on top */
+            cursor: pointer;
+            transition: opacity 0.5s;
+            backdrop-filter: blur(10px); /* Adds blur effect to background */
+        }
+
+        /* Fade out effect */
+        .cover.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Background video styling */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1; /* Behind other content */
+        }
+
+        /* Content styling */
+        .content {
+            opacity: 0; /* Initially hidden */
+            transition: opacity 1s ease-in-out; /* Smooth fade-in transition */
+        }
+
+        /* Content visible after cover is clicked */
+        .content.visible {
+            opacity: 1; /* Makes content visible */
+        }
     </style>
 </head>
 <body>
@@ -200,37 +262,70 @@
     <!-- Background video -->
     <video src="https://r2.guns.lol/1d4ab8c9-c691-447b-b151-6bd21082afc2.mp4" playsinline loop autoplay muted class="background-video"></video>
 
+    <script>
+        // Define the two audio sources
+        const audioSources = [
+            "https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
+            "https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3"
+        ];
+
+        // Randomly select one of the audio sources
+        const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
+
+        // Create the audio element with the selected source
+        const audio = new Audio(selectedAudioSource);
+        audio.loop = true; // Set audio to loop
+
+        // Function to reveal the site, fade content, and play audio
+        document.getElementById('cover').addEventListener('click', () => {
+            // Hide the cover with a fade-out effect
+            document.getElementById('cover').classList.add('hidden');
+
+            // Show the content with a fade-in effect
+            document.getElementById('website-content').classList.add('visible');
+
+            // Play audio after the cover is clicked
+            audio.play().catch(error => {
+                console.log("Autoplay blocked. Click to enable audio.");
+                // If autoplay is blocked, play the audio upon another click
+                document.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true });
+            });
+        });
+    </script>
+</body>
+
     <!-- Centered content container -->
-    <div class="content" id="website-content">
-        <div class="centered-container">
-            <!-- Profile container -->
-            <div class="profile-container">
-                <img src="https://cdn.discordapp.com/avatar-decoration-presets/a_c3cffc19e9784f7d0b005eecdf1b566e.png" alt="Profile Decoration" class="profile-decoration">
-                <img src="https://r2.guns.lol/2e36f1f2-a2a9-495f-8d63-3c3c94ce1d3f.jpg" alt="Profile Picture" class="profile-picture">
-            </div>
+    <div class="centered-container">
+        <!-- Profile container -->
+        <div class="profile-container">
+            <img src="https://cdn.discordapp.com/avatar-decoration-presets/a_c3cffc19e9784f7d0b005eecdf1b566e.png" alt="Profile Decoration" class="profile-decoration">
+            <img src="https://r2.guns.lol/2e36f1f2-a2a9-495f-8d63-3c3c94ce1d3f.jpg" alt="Profile Picture" class="profile-picture">
+        </div>
 
-            <!-- Username with typewriter effect -->
-            <div class="username-container">
-                <h3 class="username-typewriter" id="username">
-                    <span id="typed-text"></span>
-                    <span class="cursor"></span>
-                </h3>
-            </div>
+        <!-- Username with typewriter effect -->
+        <div class="username-container">
+            <h3 class="username-typewriter" id="username">
+                <span id="typed-text"></span>
+                <span class="cursor"></span>
+            </h3>
+        </div>
 
-            <!-- Social Links -->
-            <div class="social-links">
-                <a href="https://instagram.com/wt0ur" target="_blank">
-                    <img src="https://r2.guns.lol/43dac745-1942-42f1-8f13-b6c429017678.gif" alt="Instagram">
-                </a>
-                <a href="https://discord.gg/plus" target="_blank">
-                    <img src="https://r2.guns.lol/266bebad-ab93-4fe2-a0df-0ca2d9025bcb.gif" alt="Discord">
-                </a>
-                <a href="https://x.com/wt0ur" target="_blank">
-                    <img src="https://r2.guns.lol/289a6455-3685-4605-b5b5-f113974f0438.gif" alt="X (Twitter)">
-                </a>
-            </div>
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://instagram.com/wt0ur" target="_blank">
+                <img src="https://r2.guns.lol/43dac745-1942-42f1-8f13-b6c429017678.gif" alt="Instagram">
+            </a>
+            <a href="https://discord.gg/plus" target="_blank">
+                <img src="https://r2.guns.lol/266bebad-ab93-4fe2-a0df-0ca2d9025bcb.gif" alt="Discord">
+            </a>
+            <a href="https://x.com/wt0ur" target="_blank">
+                <img src="https://r2.guns.lol/289a6455-3685-4605-b5b5-f113974f0438.gif" alt="X (Twitter)">
+            </a>
+        </div>
 
-             <!-- Discord Join Section -->
+        <!-- Discord Join Section -->
 			<div class="center-container">
     			<div class="discord-join">
         			<div class="discord-icon">
@@ -268,41 +363,13 @@
         			<h1>/ p l u s</h1>
         			<a href="https://discord.gg/plus" target="_blank">join</a>
     			</div>
-            </div>
+			</div>
 
-    <script>
-        // Define the two audio sources
-        const audioSources = [
-            "https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
-            "https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3"
-        ];
 
-        // Randomly select one of the audio sources
-        const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
-
-        // Create the audio element with the selected source
-        const audio = new Audio(selectedAudioSource);
-        audio.loop = true; // Set audio to loop
-
-        // Function to reveal the site, fade content, and play audio
-        document.getElementById('cover').addEventListener('click', () => {
-            // Hide the cover with a fade-out effect
-            document.getElementById('cover').classList.add('hidden');
-
-            // Show the content with a fade-in effect
-            document.getElementById('website-content').classList.add('visible');
-
-            // Play audio after the cover is clicked
-            audio.play().catch(error => {
-                console.log("Autoplay blocked. Click to enable audio.");
-                // If autoplay is blocked, play the audio upon another click
-                document.addEventListener('click', () => {
-                    audio.play();
-                }, { once: true });
-            });
-        });
-
-       	 <!-- HTML element to display the typewriter effect -->
+    <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js" id="_cursor"></script>
+    <script src="https://assets.guns.lol/oneko.js" id="_ccat"></script>
+    <script src="https://assets.guns.lol/_pow.js" id="_codescript"></script>
+        <!-- HTML element to display the typewriter effect -->
 		<div id="typed-text-container">
     		<span id="typed-text"></span>
 		</div>
@@ -367,5 +434,6 @@
     		// Start typing effect
     		typeWriter();
 		</script>
+
 </body>
 </html>

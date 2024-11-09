@@ -25,7 +25,7 @@
         body {
             background-color: #000;
             color: #fff;
-            font-family: Satoshi, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -64,14 +64,14 @@
         .profile-container {
             position: relative;
             display: inline-block;
-            margin-bottom: 10px; /* Reduced the margin */
+            margin-bottom: 10px;
         }
 
         .profile-decoration {
             width: 200px;
             height: auto;
             position: absolute;
-            top: -20px; /* Adjusted the top position to move it lower */
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -83,14 +83,26 @@
             border: 4px solid #ffffff;
         }
 
+        .username-container {
+            margin-top: 10px; /* Adjusted margin */
+        }
+
         .username-typewriter {
             font-size: 36px;
             color: #ffffff;
-            margin-top: 5px; /* Reduced the margin */
             font-weight: bold;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
         }
 
         .cursor {
+            position: absolute;
+            right: -5px;
+            background-color: #fff;
+            width: 5px;
+            height: 36px;
             animation: blink 1s infinite step-end;
         }
 
@@ -100,9 +112,35 @@
             }
         }
 
+        /* Typewriter animation */
+        .username-typewriter .typing {
+            display: inline-block;
+            width: 0;
+            overflow: hidden;
+            animation: typing 4s steps(6) forwards, reverseTyping 4s steps(6) 4s forwards;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes reverseTyping {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0;
+            }
+        }
+
         /* Social links container */
         .social-links {
-            margin-top: 10px; /* Reduced the margin */
+            margin-top: 10px;
         }
 
         .social-links a {
@@ -122,7 +160,7 @@
 
         /* Discord join section */
         .discord-join {
-            margin-top: 20px; /* Reduced the margin */
+            margin-top: 20px;
         }
 
         .discord-icon img {
@@ -155,6 +193,11 @@
         .discord-join a:hover {
             background-color: #5d74d3;
         }
+
+        /* CAPTCHA Styling */
+        .cf-turnstile {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -164,11 +207,18 @@
 
     <!-- Centered content container -->
     <div class="centered-container">
-        <!-- Profile and username -->
+        <!-- Profile container -->
         <div class="profile-container">
             <img src="https://cdn.discordapp.com/avatar-decoration-presets/a_c3cffc19e9784f7d0b005eecdf1b566e.png" alt="Profile Decoration" class="profile-decoration">
             <img src="https://r2.guns.lol/2e36f1f2-a2a9-495f-8d63-3c3c94ce1d3f.jpg" alt="Profile Picture" class="profile-picture">
-            <h3 class="username-typewriter">tour<span class="cursor">|</span></h3>
+        </div>
+
+        <!-- Username with typewriter effect -->
+        <div class="username-container">
+            <h3 class="username-typewriter" id="username">
+                <span id="typed-text"></span>
+                <span class="cursor"></span>
+            </h3>
         </div>
 
         <!-- Social Links -->
@@ -189,19 +239,34 @@
             <div class="discord-icon">
                 <img src="https://cdn.discordapp.com/icons/1238290923763400875/a_ad9b6846b041127d1a06ff530edceb01.png" alt="Discord Icon">
             </div>
-            <h1>/plus</h1>
+            <h1>/ p l u s</h1>
+            <p>63 Online | 375 Members</p>
             <a href="https://discord.gg/plus" target="_blank">Join</a>
         </div>
+
+        <!-- CAPTCHA Verification -->
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAAgU7T2niLQD-TLm" data-callback="getToken"></div>
+    </div>
+
     <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js" id="_cursor"></script>
     <script src="https://assets.guns.lol/oneko.js" id="_ccat"></script>
     <script src="https://assets.guns.lol/_pow.js" id="_codescript"></script>
     <script>
-        const p = new _injPow("b429f829a116cbc22965d608a21db381bf6e7526cd2721bb2dfb6b70895", "5", "98d6ad156b20547c2092a7d8d1c73d42b975b0845dd1d3d3653a32c0b44d6ec6", false);
-        p.solvepow().then(async (o) => {
-            if (o != null) {
-                await getResult(o.solution);
+        // Typewriter Effect for Username
+        var i = 0;
+        var username = " tour "; // Text to type
+        var speed = 250; // Typing speed
+
+        function typeWriter() {
+            if (i < username.length) {
+                document.getElementById("typed-text").innerHTML += username.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
             }
-        });
+        }
+
+        // Start typing effect
+        typeWriter();
     </script>
 </body>
 </html>

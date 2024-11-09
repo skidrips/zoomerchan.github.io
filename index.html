@@ -25,7 +25,7 @@
         body {
             background-color: #000;
             color: #fff;
-            font-family: Arial, sans-serif;
+            font-family: Montserrat, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -202,8 +202,33 @@
 </head>
 <body>
     <!-- Background video and audio -->
-    <video src="https://r2.guns.lol/1d4ab8c9-c691-447b-b151-6bd21082afc2.mp4" playsinline loop autoplay muted class="background-video"></video>
-    <audio src="https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3" loop autoplay></audio>
+	<video src="https://r2.guns.lol/1d4ab8c9-c691-447b-b151-6bd21082afc2.mp4" playsinline loop autoplay muted class="background-video"></video>
+
+	<script>
+    // Define the two audio sources
+    const audioSources = [
+        "https://r2.guns.lol/551d7909-f501-4b21-a270-60d04ec902ba.mp3",
+        "https://r2.guns.lol/99ff1ac0-7c4c-44bb-9ce7-a42bc2a158c6.mp3"
+    ];
+
+    // Randomly select one of the audio sources
+    const selectedAudioSource = audioSources[Math.floor(Math.random() * audioSources.length)];
+
+    // Create the audio element with the selected source
+    const audio = new Audio(selectedAudioSource);
+    audio.loop = true; // Set audio to loop
+
+    // Attempt to play the audio when the page loads
+    window.addEventListener('load', () => {
+        audio.play().catch(error => {
+            // If autoplay is blocked, add a click listener to start the audio
+            console.log("Autoplay blocked. Click to enable audio.");
+            document.addEventListener('click', () => {
+                audio.play();
+            }, { once: true });
+        });
+    });
+</script>
 
     <!-- Centered content container -->
     <div class="centered-container">
@@ -235,38 +260,114 @@
         </div>
 
         <!-- Discord Join Section -->
-        <div class="discord-join">
-            <div class="discord-icon">
-                <img src="https://cdn.discordapp.com/icons/1238290923763400875/a_ad9b6846b041127d1a06ff530edceb01.gif" alt="Discord Icon">
-            </div>
-            <h1>/ p l u s</h1>
-            <p>63 Online | 375 Members</p>
-            <a href="https://discord.gg/plus" target="_blank">Join</a>
-        </div>
+			<div class="center-container">
+    			<div class="discord-join">
+        			<div class="discord-icon">
+            			<style>
+                			#rcorners1 {
+                    			border-radius: 25px;
+                    			background: url(https://cdn.discordapp.com/icons/1238290923763400875/a_ad9b6846b041127d1a06ff530edceb01.gif);
+                    			background-size: cover;
+                    			width: 80px;
+                    			height: 80px;
+                    			margin: 0;
+                    			padding: 0;
+                			}
 
-        <!-- CAPTCHA Verification -->
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAAAgU7T2niLQD-TLm" data-callback="getToken"></div>
-    </div>
+                			/* Center the container with minimal gap */
+                            .center-container {
+                    			display: flex;
+                    			justify-content: center;
+                    			align-items: center;
+                    			min-height: 35vh; /* Adjust height as needed */
+                    			text-align: center;
+                			}
+
+                			/* Center and reduce gap */
+                			.discord-join {
+                    			display: flex;
+                    			flex-direction: column;
+                    			align-items: center;
+                    			gap: 5px; /* Adjust gap as needed */
+                			}
+            			</style>
+
+            			<p id="rcorners1"></p>
+        			</div>
+        			<h1>/ p l u s</h1>
+        			<a href="https://discord.gg/plus" target="_blank">join</a>
+    			</div>
+			</div>
+
 
     <script src="https://unpkg.com/cursor-effects@latest/dist/browser.js" id="_cursor"></script>
     <script src="https://assets.guns.lol/oneko.js" id="_ccat"></script>
     <script src="https://assets.guns.lol/_pow.js" id="_codescript"></script>
-    <script>
-        // Typewriter Effect for Username
-        var i = 0;
-        var username = " tour "; // Text to type
-        var speed = 250; // Typing speed
+        <!-- HTML element to display the typewriter effect -->
+		<div id="typed-text-container">
+    		<span id="typed-text"></span>
+		</div>
 
-        function typeWriter() {
-            if (i < username.length) {
-                document.getElementById("typed-text").innerHTML += username.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            }
-        }
+		<style>
+    		/* Container to hold the typewriter effect with cursor */
+    		#typed-text-container {
+        		display: inline-block;
+    		}
 
-        // Start typing effect
-        typeWriter();
-    </script>
+    		/* Style for the blinking cursor */
+    		#typed-text::after {
+        		content: "|";
+        		animation: blink 0.7s steps(1) infinite;
+        		color: inherit; /* Ensures the cursor matches the text color */
+    		}
+
+    		/* Blinking animation */
+    		@keyframes blink {
+        		0%, 50% {
+            		opacity: 1;
+        		}
+        		50.1%, 100% {
+            		opacity: 0;
+        		}
+    		}
+		</style>
+
+
+
+		<script>
+    		// Typewriter Effect for Username
+    		var i = 0;
+    		var username = " tour"; // Text to type
+    		var speed = 250; // Typing speed
+    		var isDeleting = false; // Track if we are deleting
+
+    		function typeWriter() {
+        		var displayText = document.getElementById("typed-text");
+
+        		if (!isDeleting && i < username.length) {
+            		// Typing phase
+            		displayText.innerHTML += username.charAt(i);
+            		i++;
+            		setTimeout(typeWriter, speed);
+        		} else if (isDeleting && i > 0) {
+            		// Deleting phase
+            		displayText.innerHTML = username.substring(0, i - 1);
+            		i--;
+            		setTimeout(typeWriter, speed);
+        		} else if (!isDeleting && i === username.length) {
+            		// Start deleting after fully typed
+            		isDeleting = true;
+            		setTimeout(typeWriter, speed);
+        		} else if (isDeleting && i === 0) {
+            		// Restart typing after fully deleted
+            		isDeleting = false;
+            		setTimeout(typeWriter, speed);
+        		}
+    		}
+
+    		// Start typing effect
+    		typeWriter();
+		</script>
+
 </body>
 </html>

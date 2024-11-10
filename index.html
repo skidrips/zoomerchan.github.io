@@ -279,46 +279,6 @@
             });
         });
     </script>
-	<script>
-        // Typewriter effect for the website title (typing and deleting text)
-        const titleText = "tour"; // Text to be typed
-        let i = 0; // Starting index for typing
-        let currentTitle = "@"; // The current title text
-        let deleting = false; // Flag to indicate if we're deleting the text
-        const typingSpeed = 1000; // Typing speed in milliseconds
-        const deletingSpeed = 800; // Deleting speed in milliseconds
-
-        function typeWriter() {
-            if (!deleting) {
-                // Typing the text
-                if (i < titleText.length) {
-                    currentTitle += titleText.charAt(i);
-                    document.title = currentTitle; // Update the document title
-                    i++;
-                    setTimeout(typeWriter, typingSpeed); // Continue typing
-                } else {
-                    // Once fully typed, start deleting
-                    deleting = true;
-                    setTimeout(typeWriter, 1000); // Wait a bit before starting to delete
-                }
-            } else {
-                // Deleting the text
-                if (i > 0) {
-                    currentTitle = currentTitle.slice(0, -1);
-                    document.title = currentTitle; // Update the document title
-                    i--;
-                    setTimeout(typeWriter, deletingSpeed); // Continue deleting
-                } else {
-                    // Once fully deleted, start typing again
-                    deleting = false;
-                    setTimeout(typeWriter, 1000); // Wait a bit before starting to type again
-                }
-            }
-        }
-
-        // Start the typewriter effect
-        typeWriter();
-	</script>
 		
     <!-- Centered content container -->
     <div class="centered-container">
@@ -369,7 +329,7 @@
                     				display: flex;
                     				justify-content: center;
                     				align-items: center;
-                    				min-height: 25vh; /* Adjust height as needed */
+                    				min-height: 35vh; /* Adjust height as needed */
                     				text-align: center;
                 			}
 
@@ -384,7 +344,7 @@
 
             			<p id="rcorners1"></p>
         		</div>
-        		<h1>/ p l u s</h1>
+        		<h1>/plus</h1>
         		<a href="https://discord.gg/plus" target="_blank">join</a>
     		</div>
 </div>
